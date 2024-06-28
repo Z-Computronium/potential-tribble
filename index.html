@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+        }
+        .button-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+        }
+        .button {
+            flex: 1;
+            height: 100%;
+            margin: 5px;
+            font-size: 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+        }
+        .button-green { background-color: #4CAF50; }
+        .button-blue { background-color: #008CBA; }
+        .button-red { background-color: #f44336; }
+        .button-purple { background-color: #800080; }
+        .button:hover {
+            opacity: 0.8;
+        }
+        .spacer {
+            height: 20px; /* Adjust this value to control the space */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px; /* Adjust this value to control the input height */
+        }
+        .input-container input {
+            padding: 15px;
+            font-size: 24px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            width: 400px;
+            outline: none;
+        }
+        .counter {
+            font-size: 48px;
+            position: absolute;
+            top: 10%;
+        }
+        .button-label {
+            font-size: 36px;
+            position: absolute;
+            top: 40%;
+        }
+        .percentage {
+            font-size: 24px;
+            position: absolute;
+            bottom: 10px;
+        }
+    </style>
+    <title>Counter Buttons</title>
+</head>
+<body>
+    <div class="spacer">
+        <div class="input-container">
+            <input type="text" placeholder="Input Player One Name Here" id="player1-name">
+        </div>
+    </div>
+    <div class="button-container">
+        <button class="button button-green" onclick="incrementPassCatch('counter1', 'player1')">
+            <span class="counter" id="counter1">0</span>
+            <span class="button-label">Pass/Catch</span>
+            <span class="percentage" id="percentage1">0%</span>
+        </button>
+        <button class="button button-blue" onclick="incrementDroppedPass('counter2', 'player1')">
+            <span class="counter" id="counter2">0</span>
+            <span class="button-label">Dropped/Pass</span>
+            <span class="percentage" id="percentage2">0%</span>
+        </button>
+        <button class="button button-red" onclick="incrementFailedPass('counter3', 'player1')">
+            <span class="counter" id="counter3">0</span>
+            <span class="button-label">Failed/Pass</span>
+            <span class="percentage" id="percentage3">0%</span>
+        </button>
+        <button class="button button-purple" onclick="incrementStolenPasses('counter4', 'player1')">
+            <span class="counter" id="counter4">0</span>
+            <span class="button-label">Stolen/Passes</span>
+            <span class="percentage" id="percentage4">0%</span>
+        </button>
+    </div>
+    <div class="spacer">
+        <div class="input-container">
+            <input type="text" placeholder="Input Player Two Name Here" id="player2-name">
+        </div>
+    </div>
+    <div class="button-container">
+        <button class="button button-green" onclick="incrementPassCatch('counter5', 'player2')">
+            <span class="counter" id="counter5">0</span>
+            <span class="button-label">Pass/Catch</span>
+            <span class="percentage" id="percentage5">0%</span>
+        </button>
+        <button class="button button-blue" onclick="incrementDroppedPass('counter6', 'player2')">
+            <span class="counter" id="counter6">0</span>
+            <span class="button-label">Dropped/Pass</span>
+            <span class="percentage" id="percentage6">0%</span>
+        </button>
+        <button class="button button-red" onclick="incrementFailedPass('counter7', 'player2')">
+            <span class="counter" id="counter7">0</span>
+            <span class="button-label">Failed/Pass</span>
+            <span class="percentage" id="percentage7">0%</span>
+        </button>
+        <button class="button button-purple" onclick="incrementStolenPasses('counter8', 'player2')">
+            <span class="counter" id="counter8">0</span>
+            <span class="button-label">Stolen/Passes</span>
+            <span class="percentage" id="percentage8">0%</span>
+        </button>
+    </div>
+    <script>
+        var playerStats = {
+            player1: { passCatch: 0, droppedPass: 0, failedPass: 0, stolenPasses: 0 },
+            player2: { passCatch: 0, droppedPass: 0, failedPass: 0, stolenPasses: 0 }
+        };
+
+        // Function to increment passCatch and update percentages for green button
+        function incrementPassCatch(id, player) {
+            var element = document.getElementById(id);
+            var count = parseInt(element.innerText);
+            element.innerText = count + 1;
+            playerStats[player].passCatch += 1;
+            updatePercentages(player);
+        }
+        function incrementDroppedPass(id, player) {
+            var element = document.getElementById(id);
+            var count = parseInt(element.innerText);
+            element.innerText = count + 1;
+            playerStats[player].droppedPass += 1;
+            updatePercentages(player);
+        }
+
+
+        // Function to increment failedPass for red button
+        function incrementFailedPass(id, player) {
+            var element = document.getElementById(id);
+            var count = parseInt(element.innerText);
+            element.innerText = count + 1;
+            playerStats[player].failedPass += 1;
+            updatePercentages(player);
+        }
+        function incrementStolenPasses(id, player) {
+            var element = document.getElementById(id);
+            var count = parseInt(element.innerText);
+            element.innerText = count + 1;
+            playerStats[player].stolenPasses += 1;
+            updatePercentages(player);
+        }
+
+        // Function to update percentages for a specific player
+        function updatePercentages(player) {
+            var passCatchCount = playerStats[player].passCatch;
+            var droppedPassCount = playerStats[player].droppedPass;
+            var failedPassCount = playerStats[player].failedPass;
+            var stolenPassesCount = playerStats[player].stolenPasses;
+            var totalCount = passCatchCount + droppedPassCount + failedPassCount + stolenPassesCount;
+
+            if (totalCount === 0) {
+                return;
+            }
+
+            var percentagePassCatch = (passCatchCount / totalCount * 100).toFixed(2);
+            var percentageDroppedPass = (droppedPassCount / totalCount * 100).toFixed(2);
+            var percentageFailedPass = (failedPassCount / totalCount * 100).toFixed(2);
+            var percentageStolenPasses = (stolenPassesCount / totalCount * 100).toFixed(2);
+
+            if (player === 'player1') {
+                document.getElementById('percentage1').innerText = percentagePassCatch + '%';
+                document.getElementById('percentage2').innerText = percentageDroppedPass + '%';
+                document.getElementById('percentage3').innerText = percentageFailedPass + '%';
+                document.getElementById('percentage4').innerText = percentageStolenPasses + '%';
+            } else if (player === 'player2') {
+                document.getElementById('percentage5').innerText = percentagePassCatch + '%';
+                document.getElementById('percentage6').innerText = percentageDroppedPass + '%';
+                document.getElementById('percentage7').innerText = percentageFailedPass + '%';
+                document.getElementById('percentage8').innerText = percentageStolenPasses + '%';
+            }
+        }
+
+        // Function to update counter text content based on current count
+        function updateCounter(id, player) {
+            var element = document.getElementById(id);
+            element.innerText = playerStats[player].failedPass;
+        }
+    </script>
+</body>
+</html>
